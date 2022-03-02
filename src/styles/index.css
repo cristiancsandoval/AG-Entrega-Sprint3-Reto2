@@ -1,0 +1,17 @@
+/*Documento general de estilos*/
+
+/*Importación de fuente*/
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+/*Reseteo general de estilos*/
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*Estilos generales*/
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 18px;
+}
