@@ -131,8 +131,10 @@ export const CntrList = styled.div`
             align-items: center;
             justify-content: center;
             border-bottom: solid 1px hsl(236, 33%, 92%);
+            background-color:  hsl(0, 0%, 98%);
             .dark &{
                border-color: hsl(237, 14%, 26%);
+               background-color: hsl(235, 24%, 19%);
             }
             .btn-select{
                 width: 20px;
@@ -205,6 +207,9 @@ export const CntrList = styled.div`
                 .btn-close{
                     visibility: visible;
                 }
+            }
+            &:first-child{
+                border-radius: 5px 5px 0 0;
             }
         }
     }
@@ -323,5 +328,19 @@ export const BarraOpciones = styled.nav`
                 background-color: hsl(235, 24%, 19%);
             }
         }
+    }
+`
+
+export const DragDropText = styled.h3`
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    margin: 30px 0 ;
+    color: hsl(236, 9%, 61%);
+    .dark &{
+        color: hsl(234, 11%, 52%);
+    }
+    @media screen and (max-width: 510px){
+        margin-top: 80px;
     }
 `

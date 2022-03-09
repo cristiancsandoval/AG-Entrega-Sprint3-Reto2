@@ -1,11 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import {DragDropContext} from 'react-beautiful-dnd'
 import { addData } from '../data/data'
 import { endpoint } from '../helpers/url'
 import { iconClose, iconSelect } from '../media/images'
 import { agregarNota, cargarData, eliminarNota, limpiarCompletado, marcarNota } from '../redux/actions/notasActions'
 import { BarraOpciones, CntrList } from '../styles/styles'
+import { Droppable } from 'react-beautiful-dnd'
+import { Draggable } from 'react-beautiful-dnd'
 
 const ListToDo = () => {
 
@@ -48,6 +51,13 @@ const ListToDo = () => {
       setNuevaNota(target.value)
   }
 
+  const reordenarLista = (origen, destino) =>{
+
+    const [nota] = lista.splice(origen, 1);
+    lista.splice(destino, 0, nota);
+
+  }
+
   return (
     <CntrList>
         <form onSubmit={handleSubmit}>
@@ -58,24 +68,50 @@ const ListToDo = () => {
                 onChange={handleChange}
             />
         </form>
-        <div>
-          {lista.length===0 &&
-            <div><p className='alert'>{alerta}</p></div>
-          }
-          { 
-            lista.map(note=>(
-              <div key={note.id} className={note.status}>
-                <button className='btn-select' onClick={()=>dispatch(marcarNota(note.id))}>
-                  <img src={iconSelect} alt='Icon check' />
-                </button>
-                <p>{note.nota}</p>
-                <button className='btn-close' onClick={()=>dispatch(eliminarNota(note.id))}>
-                  <img src={iconClose} alt='Icon close'/>
-                </button>
-              </div>
-            ))
-          }
-        </div>
+        <DragDropContext 
+            onDragEnd={(result)=>{
+                const {source, destination} = result;
+                if((!destination) || (source.index===destination.index && source.droppableId===destination.droppableId)){
+                  return;
+                }
+                reordenarLista(source.index, destination.index)
+            }}>
+            <Droppable droppableId='notes'>
+              {(droppabledProvided)=>(
+                <div 
+                  {...droppabledProvided.droppableProps}
+                  ref={droppabledProvided.innerRef}
+                >
+                  {lista.length===0 &&
+                    <div><p className='alert'>{alerta}</p></div>
+                  }
+                  { 
+                    lista.map((note, index)=>(
+                      <Draggable key={note.id} draggableId={note.id} index={index}>
+                          {(draggableProvided)=>(
+                            <div
+                              {...draggableProvided.draggableProps}
+                              ref={draggableProvided.innerRef}
+                              {...draggableProvided.dragHandleProps}
+                              className={note.status}
+                            >
+                                <button className='btn-select' onClick={()=>dispatch(marcarNota(note.id))}>
+                                  <img src={iconSelect} alt='Icon check' />
+                                </button>
+                                <p>{note.nota}</p>
+                                <button className='btn-close' onClick={()=>dispatch(eliminarNota(note.id))}>
+                                  <img src={iconClose} alt='Icon close'/>
+                                </button>
+                            </div>
+                          )}
+                      </Draggable>
+                    ))
+                  }
+                  {droppabledProvided.placeholder}
+                </div>
+              )}
+            </Droppable>
+        </DragDropContext>
         <BarraOpciones>
           <p>{itemsLeft} items left</p>
           <div className={filtro}>

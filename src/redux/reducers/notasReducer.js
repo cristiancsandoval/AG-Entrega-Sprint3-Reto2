@@ -18,14 +18,16 @@ export const notasReducer = (state=initialState, action) =>{
                 notas: [ action.payload, ...state.notas]
             }
         case types.MARCAR_NOTA:
-            const note = state.notas.find((n)=>(n.id===action.payload))
-            const filter = state.notas.filter((n)=>(n.id!==action.payload))
+            const arregloNotas = [...state.notas]
+            const note = arregloNotas.find((n)=>(n.id===action.payload))
+            const index = arregloNotas.findIndex((n)=>(n.id===action.payload))
             const newStatus = (note.status==="active") ? "completed" : "active"
             const newNote = {nota:note.nota, id:note.id, status:newStatus}
+            arregloNotas.splice(index, 1, newNote)
             actualizarData(newNote, note.id)
             return{
                 ...state,
-                notas: [newNote, ...filter]
+                notas: arregloNotas
             }
         case types.ELIMINAR_NOTA:
             const newData = state.notas.filter((n)=>(n.id!==action.payload))

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ListToDo from './ListToDo'
 import { cambiarTema, obtenerTema } from '../helpers/tema'
-import { CntrApp } from '../styles/styles'
+import { CntrApp, DragDropText } from '../styles/styles'
 import {moon, sun} from '../media/images'
 
 const CntrMain = () => {
@@ -18,6 +18,9 @@ const CntrMain = () => {
             </button>
         </div>
         <ListToDo/>
+        <DragDropText>
+          Drag and drop to reorder list
+        </DragDropText>
     </CntrApp>
   )
 }
