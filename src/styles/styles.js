@@ -168,7 +168,7 @@ export const CntrList = styled.div`
                 .dark &{
                     color: hsl(234, 39%, 85%);
                 }
-                &.no-notes{
+                &.alert{
                     text-align: center;
                     font-size: 14px;
                 }

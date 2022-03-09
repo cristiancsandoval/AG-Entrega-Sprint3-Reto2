@@ -11,16 +11,19 @@ const ListToDo = () => {
 
   const dispatch = useDispatch()
   const {notas} = useSelector((state)=>state.notas);
-  const [filtro, setFiltro] = useState("")
-  const [nuevaNota, setNuevaNota] = useState("")
-  const lista = notas.filter((note)=>(note.status.includes(filtro)))
-  const itemsLeft = (notas.filter((note)=>(note.status.includes("active")))).length
+  const [filtro, setFiltro] = useState("");
+  const [nuevaNota, setNuevaNota] = useState("");
+  const lista = notas.filter((note)=>(note.status.includes(filtro)));
+  const itemsLeft = (notas.filter((note)=>(note.status.includes("active")))).length;
+  const [cargando, setCargando] = useState(true);
+  const alerta =  cargando ? "Loading notes..." : `No ${filtro} notes`
 
   useEffect(()=>{
     
     axios.get(endpoint)
         .then((response)=>{
-            dispatch(cargarData(response.data))
+            dispatch(cargarData(response.data));
+            setCargando(false)
         })
         .catch((e)=>{
             console.log(e)
@@ -57,7 +60,7 @@ const ListToDo = () => {
         </form>
         <div>
           {lista.length===0 &&
-            <div><p className='no-notes'>{`No ${filtro} notes`}</p></div>
+            <div><p className='alert'>{alerta}</p></div>
           }
           { 
             lista.map(note=>(
