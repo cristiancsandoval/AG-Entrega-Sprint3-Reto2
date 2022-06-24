@@ -11,6 +11,8 @@ const CntrMain = () => {
 
     console.log('prueba revert');
 
+    console.log('primer cambio 2');
+
   return (
     <CntrApp className={tema}>
         <div>
