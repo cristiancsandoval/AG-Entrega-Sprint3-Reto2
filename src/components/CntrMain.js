@@ -9,6 +9,8 @@ const CntrMain = () => {
     const [tema, setTema] = useState(obtenerTema());
     const icon = (tema==="light")?  moon : sun;
 
+    console.log('prueba revert');
+
   return (
     <CntrApp className={tema}>
         <div>
