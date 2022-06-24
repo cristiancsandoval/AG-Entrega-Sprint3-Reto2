@@ -6,8 +6,8 @@ import {moon, sun} from '../media/images'
 
 const CntrMain = () => {
 
-    const [tema, setTema] = useState(obtenerTema())
-    const icon = (tema==="light")?  moon : sun
+    const [tema, setTema] = useState(obtenerTema());
+    const icon = (tema==="light")?  moon : sun;
 
   return (
     <CntrApp className={tema}>
